@@ -563,35 +563,12 @@ a.tb-item:hover { color: #fff; }
 
 /* ----------------------------------------------------------------- márkák -- */
 
-.brands { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.5rem 1.5rem; }
-@media (max-width: 900px) { .brands { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 480px) { .brands { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.brands > div {
-  display: flex; align-items: center; justify-content: center; aspect-ratio: 5 / 2; padding: 1rem 1.25rem;
-}
-/* eredeti színben — a logók színe élénkíti a semleges oldalt (megbízói kérés) */
-.brands img { max-height: 3rem; width: auto; max-width: 100%; object-fit: contain; }
-.brand-word { font-weight: 760; font-size: 1.125rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-3); }
-
-/* kezdőlapi márkaszalag: folyamatosan gördülő, végtelenített csík */
-.brand-ribbon {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6rem, #000 calc(100% - 6rem), transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6rem, #000 calc(100% - 6rem), transparent);
-}
-.brand-ribbon-track { display: flex; width: max-content; animation: brand-scroll 42s linear infinite; }
-.brand-ribbon:hover .brand-ribbon-track, .brand-ribbon:focus-within .brand-ribbon-track { animation-play-state: paused; }
-.brand-ribbon-track > div {
-  flex: 0 0 auto; width: 9.5rem; display: flex; align-items: center; justify-content: center; padding: 1rem 1.25rem;
-}
-@media (max-width: 480px) { .brand-ribbon-track > div { width: 7.5rem; padding: 0.75rem 1rem; } }
-@keyframes brand-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-/* csökkentett mozgásnál sem áll meg (megbízói kérés), csak lassabb */
-@media (prefers-reduced-motion: reduce) {
-  .brand-ribbon-track { animation-duration: 90s; }
+/* márkalista: minden név egyben látszik; pill, de NEM gomb — nincs hover,
+   nincs mutató, mert a márkáknak nincs saját oldaluk */
+.brand-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.625rem; }
+.brand-list li {
+  padding: 0.625rem 1.125rem; border: 1px solid var(--line); border-radius: 999px; background: #fff;
+  font-size: var(--t-md); font-weight: 650; line-height: 1.25; color: var(--ink-2); white-space: nowrap;
 }
 
 .partners { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
@@ -1062,8 +1039,8 @@ dialog.lb img { max-height: 80vh; width: auto; height: auto; margin-inline: auto
    MOZGÁS (v3)
    Szabály: minden animációnak oka van — belépés (hierarchia), felfedés
    (ritmus), hover (visszajelzés). Csak transform + opacity. Nincs
-   scroll-jacking, parallax, folyamatos mozgás (kivétel: márkaszalag,
-   megbízói kérés). A .js osztály nélkül minden látható (no-JS biztos).
+   scroll-jacking, parallax, folyamatos mozgás (a márkaszalag 2026-11-19
+   óta statikus lista). A .js osztály nélkül minden látható (no-JS biztos).
    ========================================================================== */
 
 /* oldalbetöltés: hero — szöveg lépcsőzetesen, kép felfedéssel */
@@ -1123,13 +1100,12 @@ dialog.lb img { max-height: 80vh; width: auto; height: auto; margin-inline: auto
 /* ------------------------------------------------------------ mozgás, nyomtatás */
 
 /* Csökkentett mozgás: nincs elmozdulás, nagyítás, lépcsőzés — csak rövid
-   (≤ 200 ms) áttűnés marad, ami nem kelt mozgásérzetet. A márkaszalag
-   megbízói kérésre lassítva megy tovább. */
+   (≤ 200 ms) áttűnés marad, ami nem kelt mozgásérzetet. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   @view-transition { navigation: none; }
   *, *::before, *::after { transition-duration: 1ms !important; transition-delay: 0ms !important; }
-  *:not(.brand-ribbon-track), *::before, *::after { animation: none !important; }
+  *, *::before, *::after { animation: none !important; }
   .js [data-rv], .js [data-rv-group] > * { transform: none !important; transition: opacity 200ms linear !important; }
   .js .pal[data-rv-group] > :nth-child(even) { transform: translateY(1.75rem) !important; }
   .ctile:hover .ctile-img img, .prod:hover .prod-img img, .news:hover .news-media img { transform: none; }
