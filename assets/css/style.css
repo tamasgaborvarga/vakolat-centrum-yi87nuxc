@@ -146,7 +146,8 @@ a:hover { color: var(--red-ink); }
 /* --------------------------------------------------- tipográfiai elemek -- */
 
 .eyebrow {
-  display: flex; align-items: center; gap: 0.625rem;
+  /* blokk, nem flex: a hero-címke két része (span + szöveg) flexben két
+     hasábra tört szűk szélességen */
   font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--ink-3);
   margin-bottom: 1rem;
@@ -362,7 +363,9 @@ a.tb-item:hover { color: #fff; }
 .hero-points .ic { color: var(--ink); }
 .hero-img { position: relative; }
 .hero-img picture { display: block; border-radius: var(--r-lg); overflow: hidden; }
-.hero-img img { width: 100%; height: clamp(22rem, 70vh, 42rem); object-fit: cover; object-position: 50% 60%; }
+/* 3:2 fix arány: a forrás 16:9, így csak ~16% esik le, és a bal szélen álló
+   targonca is teljesen látszik (a korábbi 70vh-s magas keret levágta) */
+.hero-img img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; object-position: 8% 50%; }
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; }
   /* mobilon a szöveg és a gombok jönnek először — az első képernyőn a
@@ -645,7 +648,7 @@ a.pill:hover { border-color: var(--ink); color: var(--ink); }
 .pdp-main h1 { font-size: clamp(2.125rem, 4vw, 3.25rem); }
 .pdp-main .eyebrow a { color: inherit; text-decoration: none; }
 .pdp-main .eyebrow a:hover { color: var(--ink); text-decoration: underline; }
-.eyebrow-sep { color: var(--line-2); }
+.eyebrow-sep { color: var(--line-2); margin-inline: 0.5rem; }
 .keyfacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 0.75rem; margin: 2rem 0 0; }
 .keyfacts > div { padding: 1rem 1.125rem; background: var(--alt); border-radius: var(--r-lg); }
 .keyfacts dt { font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.35rem; }
@@ -889,7 +892,7 @@ dialog.lb img { max-height: 80vh; width: auto; height: auto; margin-inline: auto
 /* ------------------------------------------------------------------- 404 -- */
 
 .nf { text-align: center; max-width: 40rem; }
-.nf .eyebrow { justify-content: center; }
+.nf .eyebrow { text-align: center; }
 .nf .lead { margin-inline: auto; }
 .nf .btn-row { justify-content: center; }
 
