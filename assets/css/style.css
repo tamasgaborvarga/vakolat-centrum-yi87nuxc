@@ -351,7 +351,9 @@ a.tb-item:hover { color: #fff; }
 /* ------------------------------------------------------------------ hero -- */
 
 .hero { background: var(--paper); padding: clamp(1.5rem, 4vw, 3.5rem) 0 clamp(2.5rem, 5vw, 4.5rem); overflow: hidden; }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+/* a képoszlop szélesebb (9:11) és a rés kisebb, hogy a kép nagyobb legyen;
+   a szövegoszlop így is elfér az „Építkezéshez” szónak (901–1920 px ellenőrizve) */
+.hero-grid { display: grid; grid-template-columns: minmax(0, 9fr) minmax(0, 11fr); gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
 .hero-txt h1 { max-width: 12ch; }
 .hero-txt .lead { max-width: 34rem; margin-top: 1.5rem; }
 .hero-txt .btn-row { margin-top: 2.25rem; }
@@ -363,9 +365,10 @@ a.tb-item:hover { color: #fff; }
 .hero-points .ic { color: var(--ink); }
 .hero-img { position: relative; }
 .hero-img picture { display: block; border-radius: var(--r-lg); overflow: hidden; }
-/* 3:2 fix arány: a forrás 16:9, így csak ~16% esik le, és a bal szélen álló
-   targonca is teljesen látszik (a korábbi 70vh-s magas keret levágta) */
-.hero-img img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; object-position: 8% 50%; }
+/* 4:3 fix arány, balra igazítva: a forrás 16:9, a jobb oldalból esik le,
+   a bal szélen álló targonca teljesen látszik (a korábbi 70vh-s magas keret
+   levágta). A kép a tartalom szélén belül marad (megbízói kérés). */
+.hero-img img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 3% 50%; }
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; }
   /* mobilon a szöveg és a gombok jönnek először — az első képernyőn a
